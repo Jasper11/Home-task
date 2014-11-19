@@ -5,10 +5,10 @@ import json
 def get_candidates():
 	url = 'http://qainterview.cogniance.com/candidates'
 	r = requests.get(url)
-	data =json.loads(r.text)
-	candidateList = data['candidates']
-	print candidateList[0]['id']
-	print len(candidateList)
+	#data =json.loads(r.text)
+	#candidateList = data['candidates']
+	#print candidateList[0]['id']
+	#print len(candidateList)
 	#print(r.text)
 	#print(r.status_code)
 	return r;
@@ -112,3 +112,27 @@ def test_delete_by_id():
 	return;
 
 #test_delete_by_id();
+
+def test_post_candidate2():
+	#preparing
+	g = get_candidates();
+	g_data = json.loads(g.text)
+	g_cand_List = g_data['candidates']
+	
+	#testing
+	p = post_candidate('Kaka', 'footballman','application/json');
+		
+	#checking
+	g2 = get_candidates();
+	g2_data = json.loads(g2.text)
+	g2_cand_list = g2_data['candidates']
+	if len(g2_cand_list) == len(g_cand_List) + 1 and (p.status_code == 201):
+		print 'test passed'
+	else:
+		print 'test failed'
+	print(len(g_cand_List))
+	print(len(g2_cand_list))
+	print(p.status_code)
+	return;
+
+test_post_candidate2(); 
