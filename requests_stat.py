@@ -3,18 +3,14 @@
 import datetime
 
 current_date = 'Date'
-current_count = '		      Amount'
+current_count = '		          		  Amount'
 
 def parse_line(line):
     strings = line.split(' ')
-    #print strings[3]
-    #date = datetime.datetime.strptime( "[2012-10-09T19:00:55Z", "[%Y-%m-%dT%H:%M:%SZ" )
-    # [15/Oct/2014:17:49:58
     global current_date
     global current_count
     if (strings[8] == '200'):
       date = datetime.datetime.strptime(strings[3], '[%d/%b/%Y:%H:%M:%S')
-      #print date
       date = date.replace(minute = 0, second = 0)
     else:
       return;
@@ -31,8 +27,6 @@ def parse_line(line):
 	current_date = date
 	current_count = 1
     return;
-
-#parse_line();  
 
 try:
   while True:

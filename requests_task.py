@@ -8,15 +8,10 @@ def get_candidates():
 	r = requests.get(url)
 	return r;
 
-#get_candidates();
-
 def get_candidate_by_id(user_id):
 	url = 'http://qainterview.cogniance.com/candidates/'
 	r = requests.get(url + str(user_id))
 	return r;
-
-#get_candidate_by_id(18);
-#get_candidate_by_id(3);
 
 def post_candidate(candidateName, candidatePosition, contentType):
 	url = 'http://qainterview.cogniance.com/candidates'
@@ -34,14 +29,10 @@ def post_candidate(candidateName, candidatePosition, contentType):
 	r = requests.post(url, data=json.dumps(payload), headers=headers)
 	return r;
 
-#post_candidate('Baba jaga', 'rider', 'application/json' );
-
 def delete_candidate_by_id(user_id):
 	url = 'http://qainterview.cogniance.com/candidates/'
 	r = requests.delete (url + str(user_id))
 	return r;
-
-#delete_candidate_by_id(25);
 
 def get_not_exist_id():
 	g = get_candidates();
@@ -53,14 +44,16 @@ def get_not_exist_id():
 	  if user_id > max_id:
 	      max_id = user_id 
 	not_exist_id = max_id + 1
-	return not_exist_id, g;
-
-def test_get_candidates():
+	return not_exist_id;
+      
+class TestGetMethods:
+  
+  def test_get_candidates(self):
 	#testing
 	g = get_candidates();
 	assert g.status_code == 200 and g.text !=''
 
-def test_get_by_id():
+  def test_get_by_id(self):
 	# preparing
 	g = get_candidates();
 	g_data = json.loads(g.text)
@@ -84,10 +77,8 @@ def test_get_by_id():
 
 	# cleaning
 	d = delete_candidate_by_id(candidate['id']);
-	
-#test_get_by_id();
 
-def test_get_by_id_with_not_exist_id():
+  def test_get_by_id_with_not_exist_id(self):
 	# preparing
 	not_exist_id = get_not_exist_id();
 	
@@ -96,10 +87,10 @@ def test_get_by_id_with_not_exist_id():
 
 	# checking
 	assert response.status_code != 200 
-	
-#test_get_by_id_with_not_exist_id();
 
-def test_post_candidate():
+class TestPostMethods:
+
+  def test_post_candidate(self):
 	#preparing
 	cand_name = 'Kristi'
 	cand_position = 'dancer'
@@ -110,10 +101,9 @@ def test_post_candidate():
 	g_cand_List = g_data['candidates']
 	
 	#testing
-	p = post_candidate(cand_name , cand_position ,cont_type);
+	p = post_candidate(cand_name, cand_position, cont_type);
 		
 	#checking
-	#use difference of cand_lists (A) to check correctness of cand data .
 	g2 = get_candidates();
 	g2_data = json.loads(g2.text)
 	g2_cand_list = g2_data['candidates']
@@ -123,9 +113,7 @@ def test_post_candidate():
 	#cleaning
 	d = delete_candidate_by_id(candidate['id']);
 
-#test_post_candidate();
-
-def test_post_candidate_with_out_name():
+  def test_post_candidate_without_name(self):
 	#preparing
 	cand_name = None
 	cand_position = 'dancer'
@@ -136,18 +124,15 @@ def test_post_candidate_with_out_name():
 	g_cand_List = g_data['candidates']
 	
 	#testing
-	p = post_candidate(cand_name , cand_position ,cont_type);
+	p = post_candidate(cand_name, cand_position, cont_type);
 		
 	#checking
-	#use difference of cand_lists (A) to check correctness of cand data .
 	g2 = get_candidates();
 	g2_data = json.loads(g2.text)
 	g2_cand_list = g2_data['candidates']
 	assert g_cand_List == g2_cand_list and (p.status_code == 400)
 
-#test_post_candidate_with_out_name();
-
-def test_post_candidate_with_out_position():
+  def test_post_candidate_without_position(self):
 	#preparing
 	cand_name = 'Kristi'
 	cand_position = None
@@ -158,10 +143,9 @@ def test_post_candidate_with_out_position():
 	g_cand_List = g_data['candidates']
 	
 	#testing
-	p = post_candidate(cand_name , cand_position ,cont_type);
+	p = post_candidate(cand_name, cand_position, cont_type);
 		
 	#checking
-	#use difference of cand_lists (A) to check correctness of cand data .
 	g2 = get_candidates();
 	g2_data = json.loads(g2.text)
 	g2_cand_list = g2_data['candidates']
@@ -171,9 +155,7 @@ def test_post_candidate_with_out_position():
 	#cleaning
 	d = delete_candidate_by_id(candidate['id']);
 
-#test_post_candidate_with_out_position();
-
-def test_post_candidate_with_out_content_type():
+  def test_post_candidate_without_content_type(self):
 	#preparing
 	cand_name = 'Kristi'
 	cand_position = 'dancer'
@@ -184,18 +166,15 @@ def test_post_candidate_with_out_content_type():
 	g_cand_List = g_data['candidates']
 	
 	#testing
-	p = post_candidate(cand_name , cand_position ,cont_type);
+	p = post_candidate(cand_name, cand_position, cont_type);
 		
 	#checking
-	#use difference of cand_lists (A) to check correctness of cand data .
 	g2 = get_candidates();
 	g2_data = json.loads(g2.text)
 	g2_cand_list = g2_data['candidates']
 	assert g_cand_List == g2_cand_list and (p.status_code == 400)
-	
-#test_post_candidate_with_out_content_type();
 
-def test_post_candidate_with_name_like_empty_string():
+  def test_post_candidate_with_name_like_empty_string(self):
 	#preparing
 	cand_name = ''
 	cand_position = 'dancer'
@@ -209,21 +188,14 @@ def test_post_candidate_with_name_like_empty_string():
 	p = post_candidate(cand_name , cand_position ,cont_type);
 		
 	#checking
-	#use difference of cand_lists (A) to check correctness of cand data .
 	g2 = get_candidates();
 	g2_data = json.loads(g2.text)
 	g2_cand_list = g2_data['candidates']
-	candidate = [item for item in g2_cand_list if item not in g_cand_List][0] 
 	assert g_cand_List == g2_cand_list and (p.status_code == 400)
 	
-	#cleaning
-	d = delete_candidate_by_id(candidate['id']);
-	
-#test_post_candidate_with_name_like_empty_string();
+class TestDeleteMethods:
 
-
-
-def test_delete_by_id():
+  def test_delete_by_id(self):
 	#preparing
 	g = get_candidates();
 	g_data = json.loads(g.text)
@@ -244,15 +216,14 @@ def test_delete_by_id():
 	cand_list3 = g3_data['candidates']
 	assert candidate not in cand_list3 and d.status_code == 200
 
-#test_delete_by_id();
-
-def test_delete_by_id_with_not_exist():
+  def test_delete_by_id_with_not_exist_id(self):
 	#preparing
 	g = get_candidates();
 	g_data = json.loads(g.text)
 	cand_list = g_data ['candidates']
 	
 	not_exist_id = get_not_exist_id();
+	print 'not_exist_id', not_exist_id
 	
 	#testing	
 	d = delete_candidate_by_id(not_exist_id);
@@ -263,7 +234,7 @@ def test_delete_by_id_with_not_exist():
 	cand_list2 = g2_data['candidates']
 	assert cand_list == cand_list2 and d.status_code != 200
 
-#test_delete_by_id_with_not_exist();
+
 
 
 
