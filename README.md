@@ -28,3 +28,7 @@ Install pytest package via command  `pip install -U pytest`
 ### running the test
 Run the script using this command:
 `py.test requests_task.py`
+
+### running the datamining script for DATAMINING task
+Run the script using this command:
+`cat datamining.log | python requests_stat.py > datamining_converted.log`
