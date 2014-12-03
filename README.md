@@ -24,10 +24,16 @@ Manually variant -- [`Install Requests`](http://docs.python-requests.org/en/late
 ### pytest 2.6.4  (package for python)
 Install pytest package via command  `pip install -U pytest`
 
+### python client for redis
+Install via command: `sudo pip install redis`
+
+### install Redis on localmachine
+how to install and run Redis is described here: ` http://redis.io/download ` 
 
 ### running the test
-Run the script using this command:
-`py.test requests_task.py`
+1) Run Redis server (database) in screen using: `$ src/redis-server &`
+2) Run the script redis_data.py  via command: `python redis_data.py` - in order to fill the Redis database with needed information.
+3) Run the script `py.test requests_task.py`
 
 ### running the datamining script for DATAMINING task
 Run the script using this command:
