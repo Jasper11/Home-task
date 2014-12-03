@@ -28,11 +28,13 @@ Install pytest package via command  `pip install -U pytest`
 Install via command: `sudo pip install redis`
 
 ### install Redis on localmachine
-how to install and run Redis is described here: ` http://redis.io/download ` 
+how to install and run Redis is described here: http://redis.io/download 
 
 ### running the test
 1) Run Redis server (database) in screen using: `$ src/redis-server &`
+
 2) Run the script redis_data.py  via command: `python redis_data.py` - in order to fill the Redis database with needed information.
+
 3) Run the script `py.test requests_task.py`
 
 ### running the datamining script for DATAMINING task
