@@ -1,7 +1,7 @@
 import requests
 import pytest
 import config
-import pytest_timeout
+
 
 
 def test_workout_categories():
@@ -139,7 +139,7 @@ def test_add_manual_workout_invalid_parameters():
     workouts = r.post(url=config.url_view_workout + str(uuid) + '/workout' + config.invalid_manual_parameters)
     assert workouts.status_code == 400
 
-@pytest.mark.timeout(60)
+
 def test_edit_manual_workout():
     r = requests.Session()
     s = r.post(url=config.url_login, data=config.credentials)
